@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Player {
-    Inventory inventory;
+    private Inventory inventory;
     private int damage;
     private int health;
     private int money;
@@ -11,6 +11,7 @@ public class Player {
 
     public Player(String name){
         this.name=name;
+        this.inventory = new Inventory();
     }
 
     public void selectChar(){
@@ -23,22 +24,23 @@ public class Player {
                                "\tHealth: "+gameChracter.getHealth()+
                                "\tMoney: "+gameChracter.getMoney());
         }
+
         System.out.println("---------------------------");
         int selectCharacter = scanner.nextInt();
         switch (selectCharacter){
-            case 1:{
+            case 1:
                 initPlayer(new Samurai());
                 break;
-            }
-            case 2:{
+            case 2:
                 initPlayer(new Archer());
-            }
-            case 3: {
+                break;
+            case 3:
                 initPlayer(new Knight());
-            }
-            default:{
+                break;
+            default:
                 initPlayer(new Samurai());
-            }
+                break;
+
         }
         System.out.println("Character : "+this.name+
                            " Damage : "+ this.damage+
@@ -53,6 +55,15 @@ public class Player {
         this.name = gameCharacter.getName();
     }
 
+    public void printInfo(){
+        System.out.println("Your Weapon : "+this.getInventory().getWeapon().getName()+
+                " | Your armor : "+this.getInventory().getArmor().getName()+
+                " | Block : "+this.getInventory().getArmor().getBlock()+
+                " | Damage : "+ this.getTotalDamage()+
+                " | Health : "+this.getHealth()+
+                " | Money : "+this.getMoney());
+    }
+
     public Inventory getInventory() {
         return inventory;
     }
@@ -61,6 +72,9 @@ public class Player {
         this.inventory = inventory;
     }
 
+    public int getTotalDamage(){
+        return damage + this.getInventory().getWeapon().getDamage();
+    }
     public int getDamage() {
         return damage;
     }
@@ -91,6 +105,10 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Weapon getWeapon(){
+        return this.getInventory().getWeapon();
     }
 }
 
