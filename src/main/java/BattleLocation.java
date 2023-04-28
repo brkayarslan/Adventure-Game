@@ -12,7 +12,7 @@ public abstract class BattleLocation extends Location {
         this.award = award;
         this.maxMonster = maxMonster;
     }
-
+    public abstract void award();
     @Override
     public boolean onLocation() {
         int obsNumber = this.randomMonsterNumber();
@@ -24,10 +24,10 @@ public abstract class BattleLocation extends Location {
             //war
             if(combat(obsNumber)){
                 System.out.println("You defeated the "+this.getMonster().getName()+" in the "+this.getName());
+                award();
                 return true;
             }
         }
-
         if (this.getPlayer().getHealth() <= 0 ){
             System.out.println("You are die!");
             return false;
@@ -36,7 +36,10 @@ public abstract class BattleLocation extends Location {
         return true;
     }
 
+
     public boolean combat(int obsNumber){
+        Random random = new Random();
+        int firstAction = random.nextInt(2)+1;
         for(int i=1 ;i <=obsNumber;i++){
             this.getMonster().setHealth(this.getMonster().getOrjHealth());
             playerStats();
@@ -44,24 +47,21 @@ public abstract class BattleLocation extends Location {
             while (this.getPlayer().getHealth()>0 && this.getMonster().getHealth() > 0){
                 System.out.println("K - Kick  |  E - Escape" );
                 String selectCombat = scanner.nextLine().toUpperCase();
-                if(selectCombat.equals("K")){
+
+                if(selectCombat.equals("K") && firstAction==1){
                     System.out.println("You kick");
                     this.getMonster().setHealth(this.getMonster().getHealth()-this.getPlayer().getTotalDamage());
                     afetKick();
                     if(this.getMonster().getHealth() > 0){
-                        System.out.println();
-                        System.out.println(this.getMonster().getName()+ " kick you");
-                        int obstacleDamage = this.getMonster().getDamage() - this.getPlayer().getInventory().getArmor().getBlock();
-                        if(obstacleDamage < 0){
-                            obstacleDamage = 0;
-                        }
-                        this.getPlayer().setHealth(this.getPlayer().getHealth()-obstacleDamage);
-                        afetKick();
+                        monsterKick();
                     }
-                }
-                else {
+                } else if (selectCombat.equals("K")&& firstAction==2) {
+                    monsterKick();
+                    firstAction = 1;
+                } else {
                     return false;
                 }
+
             }
             if(this.getMonster().getHealth() < this.getPlayer().getHealth()){
                 System.out.println("You defeated the "+this.getMonster().getName());
@@ -77,7 +77,7 @@ public abstract class BattleLocation extends Location {
     }
 
     public void afetKick(){
-        System.out.println("Health : "+ this.getPlayer().getHealth());
+        System.out.println("Your Health : "+ this.getPlayer().getHealth());
         System.out.println(this.getMonster().getName() + " health : "+this.getMonster().getHealth());
         System.out.println();
     }
@@ -91,6 +91,17 @@ public abstract class BattleLocation extends Location {
         System.out.println("Armor : "+this.getPlayer().getInventory().getArmor().getName());
         System.out.println("Block : "+this.getPlayer().getInventory().getArmor().getBlock());
         System.out.println("Money : "+this.getPlayer().getMoney());
+    }
+
+    public void monsterKick(){
+        System.out.println();
+        System.out.println(this.getMonster().getName()+ " kick you");
+        int obstacleDamage = this.getMonster().getDamage() - this.getPlayer().getInventory().getArmor().getBlock();
+        if(obstacleDamage < 0){
+            obstacleDamage = 0;
+        }
+        this.getPlayer().setHealth(this.getPlayer().getHealth()-obstacleDamage);
+        afetKick();
     }
 
     public void monsterStats(int i){

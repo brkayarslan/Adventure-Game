@@ -27,6 +27,19 @@ public class Game {
             System.out.print("Please choise a location:");
 
             int chooseLocation = scanner.nextInt();
+
+            while(player.getAward().getFood() == true && chooseLocation == 3){
+                System.out.println("Received awards in this region. Please select another region.");
+                chooseLocation = scanner.nextInt();
+            }
+            while(player.getAward().getFirewood() == true && chooseLocation == 3){
+                System.out.println("Received awards in this region. Please select another region.");
+                chooseLocation = scanner.nextInt();
+            }
+            while(player.getAward().getWater() == true && chooseLocation == 3){
+                System.out.println("Received awards in this region. Please select another region.");
+                chooseLocation = scanner.nextInt();
+            }
             switch (chooseLocation){
                 case 0:
                     location = null;
@@ -53,6 +66,10 @@ public class Game {
                 }
             }
 
+            if(player.getAward().getWater() == true && player.getAward().getFirewood() == true && player.getAward().getFood() == true){
+                System.out.println("!! YOU ARE WİN THE GAME  !!");
+                break;
+            }
             if(location == null){
                 System.out.println("See you later comander.");
                 break;

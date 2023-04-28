@@ -3,15 +3,17 @@ import java.util.Scanner;
 public class Player {
     private Inventory inventory;
     private int damage;
+    private int orjianlHealth;
     private int health;
     private int money;
     private String name;
-
+    private Award award;
     private Scanner scanner = new Scanner(System.in);
 
     public Player(String name){
         this.name=name;
         this.inventory = new Inventory();
+        this.award = new Award();
     }
 
     public void selectChar(){
@@ -51,6 +53,7 @@ public class Player {
     public void initPlayer(GameCharacter gameCharacter){
         this.damage = gameCharacter.getDamage();
         this.health = gameCharacter.getHealth();
+        this.orjianlHealth = gameCharacter.getHealth();
         this.money = gameCharacter.getMoney();
         this.name = gameCharacter.getName();
     }
@@ -109,6 +112,22 @@ public class Player {
 
     public Weapon getWeapon(){
         return this.getInventory().getWeapon();
+    }
+
+    public int getOrjianlHealth() {
+        return orjianlHealth;
+    }
+
+    public void setOrjianlHealth(int orjianlHealth) {
+        this.orjianlHealth = orjianlHealth;
+    }
+
+    public Award getAward() {
+        return award;
+    }
+
+    public void setAward(Award award) {
+        this.award = award;
     }
 }
 
