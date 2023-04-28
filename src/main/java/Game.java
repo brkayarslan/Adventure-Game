@@ -23,6 +23,7 @@ public class Game {
             System.out.println("3 - Cave");
             System.out.println("4 - Forest");
             System.out.println("5 - River");
+            System.out.println("6 - Coal");
             System.out.println("0 - Log Out");
             System.out.print("Please choise a location:");
 
@@ -60,6 +61,9 @@ public class Game {
                     break;
                 case 5:
                     location = new River(player);
+                    break;
+                case 6:
+                    location = new Coal(player);
                     break;
                 default:{
                     location = new SafeHouse(player);

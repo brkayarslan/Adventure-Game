@@ -48,6 +48,7 @@ public class ToolStore extends NormalLocation{
 
         System.out.println("Choose a weapon:");
         int selectWeaponId = scanner.nextInt();
+
         while (selectWeaponId < 0 ||selectWeaponId> Weapon.weapons().length){
             System.out.println("Please choose new");
             selectWeaponId = scanner.nextInt();
@@ -92,7 +93,7 @@ public class ToolStore extends NormalLocation{
         }
 
         if(selectArmorId != 0){
-            Armor selectArmor = Armor.gerArmorObjById(selectArmorId);
+            Armor selectArmor = Armor.getArmorObjById(selectArmorId);
             if(selectArmor != null){
                 if(selectArmor.getPrice() > this.getPlayer().getMoney()){
                     System.out.println("You don't have enough money.");
